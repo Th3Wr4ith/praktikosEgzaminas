@@ -29,7 +29,7 @@ public class IncomeController {
 	public ModelMapper modelMapper;
 
 	@Autowired
-	private final IncomeService incomeService;
+	private IncomeService incomeService;
 
 	public IncomeController(IncomeService incomeService) {
 
