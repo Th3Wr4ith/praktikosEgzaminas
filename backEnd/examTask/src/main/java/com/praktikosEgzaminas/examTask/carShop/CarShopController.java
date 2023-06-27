@@ -1,4 +1,4 @@
-package com.praktikosEgzaminas.examTask.category;
+package com.praktikosEgzaminas.examTask.carShop;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,70 +17,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.praktikosEgzaminas.examTask.dto.CategoryDTO;
+import com.praktikosEgzaminas.examTask.dto.CarShopDTO;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(path = "/api/v1/categories")
-public class CategoryController {
+@RequestMapping(path = "/api/v1/carshops")
+public class CarShopController {
 
 	@Autowired
 	public ModelMapper modelMapper;
 
 	@Autowired
-	private CategoryService categoryService;
+	private CarShopService carShopService;
 
-	public CategoryController() {
+	public CarShopController() {
 		;
 	}
 
 	@GetMapping
-	public List<CategoryDTO> getCategories() {
+	public List<CarShopDTO> getCarShops() {
 
-		return categoryService.getCategories().stream().map(category -> modelMapper.map(category, CategoryDTO.class))
+		return carShopService.getCarShops().stream().map(carShop -> modelMapper.map(carShop, CarShopDTO.class))
 				.collect(Collectors.toList());
 	}
 
 	@GetMapping("{id}")
-	public ResponseEntity<CategoryDTO> getCategoriesById(@PathVariable Long id) {
+	public ResponseEntity<CarShopDTO> getCarShopById(@PathVariable Long id) {
 
-		Category category = categoryService.getCategoriesById(id);
+		CarShop carShop = carShopService.getCarShopById(id);
 
-		CategoryDTO categoryResponse = modelMapper.map(category, CategoryDTO.class);
+		CarShopDTO carShopResponse = modelMapper.map(carShop, CarShopDTO.class);
 
-		return ResponseEntity.ok().body(categoryResponse);
+		return ResponseEntity.ok().body(carShopResponse);
 	}
 
 	@PostMapping
-	public ResponseEntity<CategoryDTO> createCategories(@RequestBody Category categoryDTO) {
+	public ResponseEntity<CarShopDTO> createCarShop(@RequestBody CarShop carShopDTO) {
 
-		Category categoryRequest = modelMapper.map(categoryDTO, Category.class);
+		CarShop carShopRequest = modelMapper.map(carShopDTO, CarShop.class);
 
-		Category category = categoryService.createCategories(categoryRequest);
+		CarShop carShop = carShopService.createCarShop(carShopRequest);
 
-		CategoryDTO categoryResponse = modelMapper.map(category, CategoryDTO.class);
+		CarShopDTO carShopResponse = modelMapper.map(carShop, CarShopDTO.class);
 
-		return new ResponseEntity<CategoryDTO>(categoryResponse, HttpStatus.CREATED);
+		return new ResponseEntity<CarShopDTO>(carShopResponse, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoryDTO> updateCategories(@PathVariable Long id,
-			@RequestBody Category updatedCategoryDTO) {
+	public ResponseEntity<CarShopDTO> updateCarShop(@PathVariable Long id, @RequestBody CarShop updatedCarShopDTO) {
 
-		Category categoryRequest = modelMapper.map(updatedCategoryDTO, Category.class);
+		CarShop carShopRequest = modelMapper.map(updatedCarShopDTO, CarShop.class);
 
-		ResponseEntity<Category> updatedCategory = categoryService.updateCategories(id, categoryRequest);
+		ResponseEntity<CarShop> updatedCarShop = carShopService.updateCarShop(id, carShopRequest);
 
-		CategoryDTO categoryResponse = modelMapper.map(updatedCategory, CategoryDTO.class);
+		CarShopDTO categoryResponse = modelMapper.map(updatedCarShop, CarShopDTO.class);
 
 		return ResponseEntity.ok().body(categoryResponse);
 
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteCategories(@PathVariable Long id) {
+	public ResponseEntity<?> deleteCarShop(@PathVariable Long id) {
 
-		categoryService.deleteCategories(id);
+		carShopService.deleteCarShop(id);
 
 		return new ResponseEntity<>("Expense category successfully deleted!", HttpStatus.OK);
 	}

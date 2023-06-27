@@ -1,4 +1,4 @@
-package com.praktikosEgzaminas.examTask.category;
+package com.praktikosEgzaminas.examTask.carShop;
 
 import java.util.List;
 
@@ -10,56 +10,58 @@ import com.praktikosEgzaminas.examTask.exeption.ResourceAlreadyExistExeption;
 import com.praktikosEgzaminas.examTask.exeption.ResourceNotFoundException;
 
 @Service
-public class CategoryService {
+public class CarShopService {
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private CarShopRepository carShopRepository;
 
-	public List<Category> getCategories() {
+	public List<CarShop> getCarShops() {
 
-		return categoryRepository.findAll();
+		return carShopRepository.findAll();
 	}
 
-	public Category getCategoriesById(Long id) throws ResourceNotFoundException {
+	public CarShop getCarShopById(Long id) throws ResourceNotFoundException {
 
-		Category categoryById = categoryRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Category does not exist"));
+		CarShop carShopById = carShopRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Car shop does not exist"));
 
-		return categoryById;
+		return carShopById;
 	}
 
-	public Category createCategories(Category category) {
+	public CarShop createCarShop(CarShop carShop) {
 
-		if (categoryRepository.findCategoryByName(category.getName()).isPresent()) {
-			throw new ResourceAlreadyExistExeption("Category already exist");
+		if (carShopRepository.findCarShopByName(carShop.getName()).isPresent()) {
+			throw new ResourceAlreadyExistExeption("Car shop already exist");
 
 		} else {
 
-			return categoryRepository.save(category);
+			return carShopRepository.save(carShop);
 		}
 	}
 
-	public ResponseEntity<Category> updateCategories(Long id, Category categoryDetails) {
+	public ResponseEntity<CarShop> updateCarShop(Long id, CarShop carShopDetails) {
 
-		Category category = categoryRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Category does not exist"));
+		CarShop carShop = carShopRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Car shop does not exist"));
 
-		if (categoryRepository.findCategoryByName(categoryDetails.getName()).isPresent()) {
-			throw new ResourceAlreadyExistExeption("Category already exist");
+		if (carShopRepository.findCarShopByName(carShopDetails.getName()).isPresent()) {
+			throw new ResourceAlreadyExistExeption("Car shop already exist");
 
 		} else {
 
-			category.setName(categoryDetails.getName());
+			carShop.setName(carShopDetails.getName());
+			carShop.setAddress(carShopDetails.getAddress());
+			carShop.setManager(carShopDetails.getManager());
 
-			Category updatedCategory = categoryRepository.save(category);
+			CarShop updatedCategory = carShopRepository.save(carShop);
 
 			return ResponseEntity.ok(updatedCategory);
 		}
 	}
 
-	public void deleteCategories(Long id) {
+	public void deleteCarShop(Long id) {
 
-		categoryRepository.deleteById(id);
+		carShopRepository.deleteById(id);
 
 	}
 

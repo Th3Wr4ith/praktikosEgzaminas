@@ -1,4 +1,4 @@
-package com.praktikosEgzaminas.examTask.category;
+package com.praktikosEgzaminas.examTask.carShop;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,15 +13,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories")
+@Table(name = "carShop")
 
-public class Category {
+public class CarShop {
 
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "category")
+	@Column(name = "name")
 	private String name;
+
+	@Column(name = "address")
+	private String address;
+
+	@Column(name = "manager")
+	private String manager;
+
 }

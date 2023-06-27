@@ -1,9 +1,6 @@
-package com.praktikosEgzaminas.examTask.expense;
+package com.praktikosEgzaminas.examTask.mechanic;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import com.praktikosEgzaminas.examTask.category.Category;
+import com.praktikosEgzaminas.examTask.carShop.CarShop;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,8 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "expenses")
-public class Expense {
+@Table(name = "mechanics")
+public class Mechanic {
 
 	@Id
 	@GeneratedValue
@@ -32,25 +29,30 @@ public class Expense {
 	private Long id;
 
 	@NotNull(message = "This field is required")
-	@Min(1)
-	@Column(name = "amount")
-	private BigDecimal amount;
-
-	@NotNull(message = "This field is required")
+	@Min(2)
 	@Column(name = "name")
 	private String name;
 
 	@NotNull(message = "This field is required")
-	@Column(name = "date")
-	private LocalDate date;
+	@Min(2)
+	@Column(name = "surname")
+	private String surname;
+
+	@NotNull(message = "This field is required")
+	@Column(name = "specialty")
+	private String specialty;
+
+	@NotNull(message = "This field is required")
+	@Column(name = "city")
+	private String city;
 
 	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "id")
+	@JoinColumn(name = "carshop_id", referencedColumnName = "id")
 	@Getter
-	private Category category;
+	private CarShop carShop;
 
-	public void assignCategory(Category category) {
-		this.category = category;
+	public void assignCarShop(CarShop carShop) {
+		this.carShop = carShop;
 
 	}
 

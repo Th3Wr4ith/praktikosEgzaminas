@@ -1,4 +1,4 @@
-package com.praktikosEgzaminas.examTask.expense;
+package com.praktikosEgzaminas.examTask.mechanic;
 
 import java.util.List;
 
@@ -6,73 +6,73 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.praktikosEgzaminas.examTask.category.Category;
-import com.praktikosEgzaminas.examTask.category.CategoryRepository;
-import com.praktikosEgzaminas.examTask.dto.ExpenseDTO;
+import com.praktikosEgzaminas.examTask.carShop.CarShop;
+import com.praktikosEgzaminas.examTask.carShop.CarShopRepository;
+import com.praktikosEgzaminas.examTask.dto.MechanicDTO;
 import com.praktikosEgzaminas.examTask.exeption.ResourceNotFoundException;
 
 @Service
-public class ExpenseService {
+public class MechanicService {
 
 	@Autowired
-	private ExpenseRepository expenseRepository;
+	private MechanicRepository mechanicRepository;
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private CarShopRepository carShopRepository;
 
-	public List<Expense> getExpenses() {
+	public List<Mechanic> getMechanics() {
 
-		return expenseRepository.findAll();
+		return mechanicRepository.findAll();
 	}
 
-	public Expense getExpensesById(Long id) throws ResourceNotFoundException {
+	public Mechanic getMechanicById(Long id) throws ResourceNotFoundException {
 
-		Expense expenseById = expenseRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Expense does not exist with id:" + id));
+		Mechanic mechanicById = mechanicRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Mechanic does not exist"));
 
-		return expenseById;
+		return mechanicById;
 	}
 
-	public Expense createExpenses(ExpenseDTO expenseDTO) {
+	public Mechanic createMechanic(MechanicDTO mechanicDTO) {
 
-		Expense expense = new Expense();
+		Mechanic mechanic = new Mechanic();
 
-		expense.setAmount(expenseDTO.getAmount());
-		expense.setName(expenseDTO.getName());
-		expense.setDate(expenseDTO.getDate());
+		mechanic.setName(mechanicDTO.getName());
+		mechanic.setSurname(mechanicDTO.getSurname());
+		mechanic.setSpecialty(mechanicDTO.getSpecialty());
+		mechanic.setCity(mechanicDTO.getCity());
 
-		Category category = categoryRepository.findCategoryByName(expenseDTO.getCategoryName())
-				.orElseThrow(() -> new ResourceNotFoundException(
-						"Category does not exist with name: " + expenseDTO.getCategoryName()));
+		CarShop carShop = carShopRepository.findCarShopByName(mechanicDTO.getCarShopName())
+				.orElseThrow(() -> new ResourceNotFoundException("Car shop does not exist"));
 
-		expense.setCategory(category);
-		return expenseRepository.save(expense);
+		mechanic.setCarShop(carShop);
+		return mechanicRepository.save(mechanic);
 	}
 
-	public ResponseEntity<Expense> updateExpenses(Long id, ExpenseDTO expenseDetails) {
+	public ResponseEntity<Mechanic> updateMechanic(Long id, MechanicDTO mechanicDetails) {
 
-		Expense expense = expenseRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Expense not exist with id: " + id));
+		Mechanic mechanic = mechanicRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Mechanic not exist"));
 
-		expense.setAmount(expenseDetails.getAmount());
-		expense.setName(expenseDetails.getName());
-		expense.setDate(expenseDetails.getDate());
+		mechanic.setName(mechanicDetails.getName());
+		mechanic.setSurname(mechanicDetails.getSurname());
+		mechanic.setSpecialty(mechanicDetails.getSpecialty());
+		mechanic.setCity(mechanicDetails.getCity());
 
-		Category category = categoryRepository.findCategoryByName(expenseDetails.getCategoryName())
-				.orElseThrow(() -> new ResourceNotFoundException(
-						"Category does not exist with name: " + expenseDetails.getCategoryName()));
+		CarShop carShop = carShopRepository.findCarShopByName(mechanicDetails.getCarShopName())
+				.orElseThrow(() -> new ResourceNotFoundException("Car shop does not exist"));
 
-		expense.setCategory(category);
+		mechanic.setCarShop(carShop);
 
-		Expense updatedExpense = expenseRepository.save(expense);
+		Mechanic updatedMechanic = mechanicRepository.save(mechanic);
 
-		return ResponseEntity.ok(updatedExpense);
+		return ResponseEntity.ok(updatedMechanic);
 
 	}
 
-	public void deleteExpenses(Long id) {
+	public void deleteMechanic(Long id) {
 
-		expenseRepository.deleteById(id);
+		mechanicRepository.deleteById(id);
 
 	}
 }
