@@ -2,12 +2,11 @@ import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import Incomes from "./pages/Incomes";
-import Expenses from "./pages/Expenses";
-import Categories from "./pages/Categories"
+import Mechanic from "./pages/Mechanic";
+import CarShop from "./pages/CarShop";
 import Home from "./pages/Home";
 import UserPage from "./pages/UserPage";
-import AdminPage from "./pages/AdminPage"
+import AdminPage from "./pages/AdminPage";
 import Login from "./pages/Login";
 
 const lightTheme = createTheme({
@@ -30,9 +29,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/incomes" element={<Incomes />} />
-            <Route path="/expenses" element={<Expenses />} />
-            <Route path="/categories" element={<Categories />} />
+            <Route path="/mechanic" element={<Mechanic />} />
+            <Route path="/carshop" element={<CarShop />} />
             <Route path="/adminpage" element={<AdminPage />} />
             <Route path="/userpage" element={<UserPage />} />
           </Routes>

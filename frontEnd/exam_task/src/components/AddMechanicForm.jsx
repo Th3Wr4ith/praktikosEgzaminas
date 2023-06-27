@@ -2,11 +2,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useEffect, useState } from "react";
 import {
   TextField,
-  Button,
   Grid,
   Paper,
   Typography,
+  Select,
+  InputLabel,
+  MenuItem,
   FormControl,
+  FormHelperText,
   Alert,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -19,9 +22,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SaveIcon from "@mui/icons-material/Save";
 import "dayjs/locale/lt";
-import { incomeValidationSchema } from "../validations/validations";
+import { mechanicsValidationSchema } from "../validations/validations";
 
-function AddIncomeForm({ handleSubmit, isLoading, success }) {
+function AddMechanicForm({ handleSubmit, isLoading, categories, success }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleAccordionChange = () => {
@@ -35,16 +38,16 @@ function AddIncomeForm({ handleSubmit, isLoading, success }) {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>ADD INCOMES</Typography>
+        <Typography>ADD MECHANIC</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Paper sx={{ p: 2 }}>
           <Typography variant="h5" gutterBottom>
-            Add an income
+            Add mechanic
           </Typography>
           <Formik
-            initialValues={{ name: "", amount: "", date: null }}
-            validationSchema={incomeValidationSchema}
+            initialValues={{ name: "", surname: "", specialty: "", city:"", carShop: "" }}
+            validationSchema={mechanicsValidationSchemaValidationSchema}
             onSubmit={handleSubmit}
           >
             {({
@@ -63,9 +66,10 @@ function AddIncomeForm({ handleSubmit, isLoading, success }) {
                       as={TextField}
                       name="name"
                       label="Name"
-                      autoComplete="off"
+                      focused={false}
                       fullWidth
                       required
+                      autoComplete="off"
                       error={touched.name && Boolean(errors.name)}
                       helperText={touched.name && errors.name}
                     />
@@ -73,33 +77,18 @@ function AddIncomeForm({ handleSubmit, isLoading, success }) {
                   <Grid item xs={12} sm={6}>
                     <Field
                       as={TextField}
-                      name="amount"
-                      label="Amount"
-                      autoComplete="off"
-                      InputLabelProps={{ shrink: true }}
+                      name="surname"
+                      label="surname"
+                      focused={false}
                       fullWidth
                       required
-                      InputProps={{
-                        inputProps: { min: 0 },
-                      }}
-                      error={touched.amount && Boolean(errors.amount)}
-                      helperText={touched.amount && errors.amount}
-                      onKeyPress={(event) => {
-                        if (event?.key === "-" || event?.key === "+") {
-                          event.preventDefault();
-                        }
-                      }}
-                      onChange={(e) => {
-                        const regex = /^\d{0,7}(?:\.\d{1,2})?$/;
-                        const isValid = regex.test(e.target.value);
-                        if (isValid) {
-                          setFieldValue("amount", e.target.value);
-                        }
-                      }}
+                      autoComplete="off"
+                      error={touched.surname && Boolean(errors.surname)}
+                      helperText={touched.surname && errors.surname}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth required>
                       <LocalizationProvider
                         dateAdapter={AdapterDayjs}
                         adapterLocale="lt"
@@ -108,27 +97,51 @@ function AddIncomeForm({ handleSubmit, isLoading, success }) {
                           as={DatePicker}
                           name="date"
                           label="Date *"
-                          value={values.date}
                           disableFuture={true}
+                          value={values.date}
                           onChange={(value) => setFieldValue("date", value)}
                           renderInput={(params) => <TextField {...params} />}
-                          onBlur={() => setFieldTouched("date", true)}
                           required
-                          error={touched.date}
-                          helperText={touched.date}
                         />
                       </LocalizationProvider>
                     </FormControl>
                   </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth required>
+                      <InputLabel
+                        id="demo-simple-select-label"
+                        error={touched.carShop && Boolean(errors.carShop)}
+                        required
+                        label="sadad"
+                      >
+                        Car shop
+                      </InputLabel>
+                      <Field
+                        as={Select}
+                        name="carShop"
+                        labelId="carShop-label"
+                        id="carShop"
+                        label="CarShop"
+                        InputLabelProps={{ shrink: true }}
+                        onChange={(event) => {
+                          setFieldValue("carShop", event.target.value);
+                        }}
+                        error={touched.carShop && Boolean(errors.carShop)}
+                      >
+                        {carShops.map((carShop) => (
+                          <MenuItem
+                            value={carShop.name}>
+
+                            {carShop.name}
+                          </MenuItem>
+                        ))}
+                      </Field>
+                      <FormHelperText sx={{ color: "red" }}>
+                        {touched.carShop && errors.carShop}
+                      </FormHelperText>
+                    </FormControl>
+                  </Grid>
                   <Grid item xs={12}>
-                    {/* <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      disabled={!dirty || !isValid}
-                    >
-                      Add
-                    </Button> */}
                     <LoadingButton
                       loading={isLoading}
                       loadingPosition="start"
@@ -156,4 +169,4 @@ function AddIncomeForm({ handleSubmit, isLoading, success }) {
   );
 }
 
-export default AddIncomeForm;
+export default AddMechanicForm;

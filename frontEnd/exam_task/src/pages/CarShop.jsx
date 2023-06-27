@@ -1,43 +1,43 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AddCategoriesForm from "../components/AddCategoriesForm";
-import CategoriesTable from "../components/CategoriesTable";
+import AddCarShopForm from "../components/AddCarShopForm";
+import CarShopTable from "../components/CarShopTable";
 
-function Categories() {
-    const [categories, setCategories] = useState({});
+function CarShop() {
+    const [carShop, setCarShop] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
-        fetchCategories();
+        fetchCarShop();
         return () => setIsMounted(false);
     }, []);
-    //TODO: move these calls to a service
-    const fetchCategoriesOnDelete = async () => {
+
+    const fetchCarShopOnDelete = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get("http://localhost:8080/api/v1/categories");
-            setCategories(response.data);
+            const response = await axios.get("http://localhost:8080/api/v1/carshops");
+            setCarShop(response.data);
         } catch (error) {
             console.error(error);
         } finally {
-            setIsLoading(false); // set loading state back to false regardless of success or error
+            setIsLoading(false);
         }
     };
 
-    const fetchCategories = async () => {
+    const fetchCarShop = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get("http://localhost:8080/api/v1/categories");
+            const response = await axios.get("http://localhost:8080/api/v1/carshops");
             if (isMounted && response.status === 200) {
                 setShowAlert(true);
                 setTimeout(() => {
                     setShowAlert(false);
                 }, 2000);
             }
-            setCategories(response.data);
+            setCarShop(response.data);
         } catch (error) {
             console.error(error);
         } finally {
@@ -47,17 +47,19 @@ function Categories() {
 
     const handleSubmit = async (values, { resetForm }) => {
         console.log(values);
-        const newCategory = {
-            name: values.name
+        const newCarShop = {
+            name: values.name,
+            address: values.address,
+            manager: values.manager,
         };
 
         try {
             const response = await axios.post(
-                "http://localhost:8080/api/v1/categories",
+                "http://localhost:8080/api/v1/carshops",
                 newCategory
             );
             resetForm();
-            fetchCategories();
+            fetchCarShop();
 
         } catch (error) {
             console.log("Error adding category:", error);
@@ -65,11 +67,11 @@ function Categories() {
     };
 
     const handleDelete = async (id) => {
-        const url = `http://localhost:8080/api/v1/categories/${id}`;
+        const url = `http://localhost:8080/api/v1/carshops/${id}`;
         try {
             const response = await axios.delete(url);
             console.log(response.data);
-            fetchCategoriesOnDelete();
+            fetchCarShopOnDelete();
         } catch (error) {
             console.log(error);
         }
@@ -77,14 +79,14 @@ function Categories() {
 
     return (
         <>
-            <AddCategoriesForm
+            <AddCarShopForm
                 handleSubmit={handleSubmit}
                 isLoading={isLoading}
                 success={showAlert}
             />
-            <CategoriesTable categories={categories} handleDelete={handleDelete} />
+            <CarShopTable carShop={carShop} handleDelete={handleDelete} />
         </>
     );
 }
 
-export default Categories;
+export default CarShop;

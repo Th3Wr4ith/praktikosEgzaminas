@@ -2,13 +2,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useEffect, useState } from "react";
 import {
     TextField,
-    Button,
     Grid,
     Paper,
     Typography,
-    Select,
-    InputLabel,
-    MenuItem,
     FormControl,
     FormHelperText,
     Alert,
@@ -20,9 +16,9 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SaveIcon from "@mui/icons-material/Save";
-import { categoriesValidationSchema } from "../validations/validations";
+import { carShopsValidationSchema } from "../validations/validations";
 
-function AddCategoriesForm({ handleSubmit, isLoading, success }) {
+function AddCarShopForm({ handleSubmit, isLoading, success }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const handleAccordionChange = () => {
@@ -36,16 +32,16 @@ function AddCategoriesForm({ handleSubmit, isLoading, success }) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography>ADD CATEGORY</Typography>
+                <Typography>ADD CAR SHOP</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 <Paper sx={{ p: 2 }}>
                     <Typography variant="h5" gutterBottom>
-                        Add category name
+                        Add car shop name
                     </Typography>
                     <Formik
                         initialValues={{ name: "" }}
-                        validationSchema={categoriesValidationSchema}
+                        validationSchema={carShopsValidationSchema}
                         onSubmit={handleSubmit}
                     >
                         {({
@@ -65,7 +61,7 @@ function AddCategoriesForm({ handleSubmit, isLoading, success }) {
                                                 name="name"
                                                 labelId="demo-simple-select-label"
                                                 id="name"
-                                                label="Category name"
+                                                label="Car shop name"
                                                 required
                                                 onChange={(event) => {
                                                     setFieldValue("name", event.target.value);
@@ -106,4 +102,4 @@ function AddCategoriesForm({ handleSubmit, isLoading, success }) {
     );
 }
 
-export default AddCategoriesForm;
+export default AddCarShopForm;

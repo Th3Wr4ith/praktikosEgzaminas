@@ -33,23 +33,11 @@ const UserSidebar = () => {
                     </ListItemIcon>
                     <ListItemText primary="Home" sx={{ ml: -1, color: "white" }} />
                 </ListItemButton>
-                <ListItemButton href="/incomes" sx={{ ml: -2 }}>
-                    <ListItemIcon>
-                        <AttachMoneyIcon sx={{ color: "white", height: "30px", width: "30px" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Incomes" sx={{ ml: -1, color: "white" }} />
-                </ListItemButton>
-                <ListItemButton href="/expenses" sx={{ ml: -2 }}>
+                <ListItemButton href="/mechanics" sx={{ ml: -2 }}>
                     <ListItemIcon>
                         <CreditCardIcon sx={{ color: "white", height: "30px", width: "30px" }} />
                     </ListItemIcon>
-                    <ListItemText primary="Expenses" sx={{ ml: -1, color: "white" }} />
-                </ListItemButton>
-                <ListItemButton href="/categories" sx={{ ml: -2 }}>
-                    <ListItemIcon>
-                        <CategoryIcon sx={{ color: "white", height: "30px", width: "30px" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Categories" sx={{ ml: -1, color: "white" }} />
+                    <ListItemText primary="Mechanics" sx={{ ml: -1, color: "white" }} />
                 </ListItemButton>
             </Box>
         </Box >

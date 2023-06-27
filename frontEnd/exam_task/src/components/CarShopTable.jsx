@@ -21,9 +21,9 @@ import {
 } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
-import { categoriesValidationSchema } from "../validations/validations";
+import { carShopsValidationSchema } from "../validations/validations";
 
-function CategoriesTable({ categories, handleDelete }) {
+function CarShopTable({ carShop, handleDelete }) {
     const [editingId, setEditingId] = useState(null);
     const [confirmDeleteIndex, setConfirmDeleteIndex] = useState(-1);
 
@@ -35,7 +35,7 @@ function CategoriesTable({ categories, handleDelete }) {
         setEditingId(null);
         try {
             await axios.put(
-                `http://localhost:8080/api/v1/categories/${id}`,
+                `http://localhost:8080/api/v1/carshops/${id}`,
                 editedValue
             );
         } catch (error) {
@@ -56,18 +56,17 @@ function CategoriesTable({ categories, handleDelete }) {
         <TableContainer component={Paper}>
             <Formik
                 enableReinitialize
-                initialValues={categories}
+                initialValues={carShop}
                 onSubmit={handleConfirm}
-                //need to make a validation for example that it will validate where the field name is 0.name, because it maps the values and gives the name depending on the key
-                validationSchema={categoriesValidationSchema}
+                validationSchema={carShopsValidationSchema}
             >
                 {({ values, errors, touched, setFieldValue }) => (
                     <Form>
-                        <Table sx={{ minWidth: 650 }} aria-label="categories table">
+                        <Table sx={{ minWidth: 650 }} aria-label="carShops table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell style={{fontWeight: 'bold'}}>Category name</TableCell>
-                                    <TableCell align="right" style={{fontWeight: 'bold'}}>Actions</TableCell>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Car shop name</TableCell>
+                                    <TableCell align="right" style={{ fontWeight: 'bold' }}>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -86,7 +85,7 @@ function CategoriesTable({ categories, handleDelete }) {
                                                         name={`${key}.name`}
                                                         labelId={`${key}.name`}
                                                         id={`${key}.name`}
-                                                        label="Category name"
+                                                        label="Car shop name"
                                                         required
                                                         value={values[key]?.name || ""}
                                                         onChange={(event) => {
@@ -100,7 +99,7 @@ function CategoriesTable({ categories, handleDelete }) {
                                                             Boolean(errors[key]?.name)
                                                         }
                                                     >
-                                                        {categories.map((name) => (
+                                                        {carShop.map((name) => (
                                                             <MenuItem
                                                                 key={name.value}
                                                                 value={name.value}
@@ -124,7 +123,7 @@ function CategoriesTable({ categories, handleDelete }) {
                                                     <IconButton
                                                         aria-label="save"
                                                         onClick={() =>
-                                                            handleConfirm(categories[key].id, values[key])
+                                                            handleConfirm(carShop[key].id, values[key])
                                                         }
                                                     >
                                                         <CheckIcon />
@@ -149,7 +148,7 @@ function CategoriesTable({ categories, handleDelete }) {
                                                     <IconButton
                                                         aria-label="delete"
                                                         onClick={() =>
-                                                            handleDeleteAndSetState(categories[key].id)
+                                                            handleDeleteAndSetState(carShop[key].id)
                                                         }
                                                     >
                                                         <CheckIcon />
@@ -180,4 +179,4 @@ function CategoriesTable({ categories, handleDelete }) {
         </TableContainer>
     );
 }
-export default CategoriesTable;
+export default CarShopTable;
