@@ -1,11 +1,27 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
-function LoginTable() {
-  const handleLogin = (values) => {
-    // Perform login logic here
-    console.log('Logging in...');
-    console.log(values);
+const LoginTable = ({ handleLogin }) => {
+  const navigate = useNavigate();
+  const initialValues = {
+    username: "",
+    password: "",
+
+  }; const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
+  const handleSubmit = (values) => {
+    if (values.username === "admin" && values.password === "admin") {
+      navigate("/adminpage");
+    } else if (values.username === "user" && values.password === "user") {
+      navigate("/userpage");
+    } else {
+      alert("Invalid username or password");
+    }
   };
 
   const containerStyle = {
@@ -46,32 +62,20 @@ function LoginTable() {
       <div style={formStyle}>
         <h2>Login</h2>
         <Formik
-          initialValues={{ username: '', password: '' }}
-          validate={(values) => {
-            const errors = {};
-
-            if (!values.username) {
-              errors.username = 'Username is required';
-            }
-
-            if (!values.password) {
-              errors.password = 'Password is required';
-            }
-
-            return errors;
-          }}
-          onSubmit={handleLogin}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
           <Form style={{ width: '100%' }}>
             <div style={{ marginBottom: '10px', width: '100%' }}>
               <label htmlFor="username">Username:</label>
               <Field type="text" id="username" name="username" style={inputStyle} />
-              <ErrorMessage name="username" component="div" />
+              <ErrorMessage name="username" component="div" className="error" />
             </div>
             <div style={{ marginBottom: '10px', width: '100%' }}>
               <label htmlFor="password">Password:</label>
               <Field type="password" id="password" name="password" style={inputStyle} />
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage name="password" component="div" className="error" />
             </div>
             <button type="submit" style={buttonStyle}>
               <h3>Login</h3>
