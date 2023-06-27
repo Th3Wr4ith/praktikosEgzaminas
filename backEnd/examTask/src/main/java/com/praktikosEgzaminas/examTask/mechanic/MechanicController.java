@@ -1,4 +1,4 @@
-package com.praktikosEgzaminas.examTask.expense;
+package com.praktikosEgzaminas.examTask.mechanic;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,69 +17,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.praktikosEgzaminas.examTask.dto.ExpenseDTO;
+import com.praktikosEgzaminas.examTask.dto.MechanicDTO;
 
 import jakarta.validation.Valid;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(path = "/api/v1/expenses")
+@RequestMapping(path = "/api/v1/mechanics")
 
-public class ExpenseController {
+public class MechanicController {
 
 	@Autowired
 	public ModelMapper modelMapper;
 
 	@Autowired
-	private ExpenseService expenseService;
+	private MechanicService mechanicService;
 
-	public ExpenseController(ExpenseService expenseService) {
+	public MechanicController(MechanicService mechanicService) {
 
-		this.expenseService = expenseService;
+		this.mechanicService = mechanicService;
 	}
 
 	@GetMapping
-	public List<ExpenseDTO> getExpenses() {
-		System.out.println(expenseService.getExpenses());
-		return expenseService.getExpenses().stream().map(expense -> modelMapper.map(expense, ExpenseDTO.class))
+	public List<MechanicDTO> getMechanics() {
+		System.out.println(mechanicService.getMechanics());
+		return mechanicService.getMechanics().stream().map(mechanic -> modelMapper.map(mechanic, MechanicDTO.class))
 				.collect(Collectors.toList());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ExpenseDTO> getExpensesById(@PathVariable Long id) {
+	public ResponseEntity<MechanicDTO> getMechanicById(@PathVariable Long id) {
 
-		Expense expense = expenseService.getExpensesById(id);
+		Mechanic mechanic = mechanicService.getMechanicById(id);
 
-		ExpenseDTO expenseResponse = modelMapper.map(expense, ExpenseDTO.class);
+		MechanicDTO mechanicResponse = modelMapper.map(mechanic, MechanicDTO.class);
 
-		return ResponseEntity.ok().body(expenseResponse);
+		return ResponseEntity.ok().body(mechanicResponse);
 	}
 
 	@PostMapping
-	public ResponseEntity<ExpenseDTO> createExpenses(@Valid @RequestBody ExpenseDTO expenseDTO) {
+	public ResponseEntity<MechanicDTO> createMechanic(@Valid @RequestBody MechanicDTO mechanicDTO) {
 
-		Expense expense = expenseService.createExpenses(expenseDTO);
+		Mechanic mechanic = mechanicService.createMechanic(mechanicDTO);
 
-		ExpenseDTO expenseResponse = modelMapper.map(expense, ExpenseDTO.class);
+		MechanicDTO mechanicResponse = modelMapper.map(mechanic, MechanicDTO.class);
 
-		expenseResponse.setCategoryName(expense.getCategory().getName());
+		mechanicResponse.setCarShopName(mechanic.getCarShop().getName());
 
-		return new ResponseEntity<ExpenseDTO>(expenseResponse, HttpStatus.CREATED);
+		return new ResponseEntity<MechanicDTO>(mechanicResponse, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Expense> updateExpenses(@PathVariable Long id, @RequestBody ExpenseDTO updatedExpenseDTO) {
+	public ResponseEntity<Mechanic> updateMechanic(@PathVariable Long id, @RequestBody MechanicDTO updatedMechanicDTO) {
 
-		return expenseService.updateExpenses(id, updatedExpenseDTO);
+		return mechanicService.updateMechanic(id, updatedMechanicDTO);
 
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteExpenses(@PathVariable Long id) {
+	public ResponseEntity<?> deleteMechanic(@PathVariable Long id) {
 
-		expenseService.deleteExpenses(id);
+		mechanicService.deleteMechanic(id);
 
-		return new ResponseEntity<>("Expense successfully deleted!", HttpStatus.OK);
+		return new ResponseEntity<>("Mechanic successfully deleted!", HttpStatus.OK);
 
 	}
 }

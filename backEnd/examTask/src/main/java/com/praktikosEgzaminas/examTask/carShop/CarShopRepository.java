@@ -1,10 +1,10 @@
-package com.praktikosEgzaminas.examTask.category;
+package com.praktikosEgzaminas.examTask.carShop;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CarShopRepository extends JpaRepository<CarShop, Long> {
 
-	Optional<Category> findCategoryByName(String name);
+	Optional<CarShop> findCarShopByName(String name);
 }

@@ -1,7 +1,7 @@
-package com.praktikosEgzaminas.examTask.expense;
+package com.praktikosEgzaminas.examTask.mechanic;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ExpenseRepository extends JpaRepository<Expense, Long> {
+public interface MechanicRepository extends JpaRepository<Mechanic, Long> {
 
 }
