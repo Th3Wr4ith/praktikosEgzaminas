@@ -10,6 +10,10 @@
 //public class UserDTO {
 //
 //	private String username;
+<<<<<<< HEAD
+=======
+//	private String email;
+>>>>>>> master
 //	private String password;
 //
 //	public void setRole(String string) {

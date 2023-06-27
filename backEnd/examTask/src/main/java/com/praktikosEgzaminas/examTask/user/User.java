@@ -11,6 +11,10 @@
 //import jakarta.persistence.GenerationType;
 //import jakarta.persistence.Id;
 //import jakarta.persistence.ManyToMany;
+<<<<<<< HEAD
+=======
+//import jakarta.validation.constraints.Email;
+>>>>>>> master
 //import lombok.AllArgsConstructor;
 //import lombok.Data;
 //import lombok.NoArgsConstructor;
@@ -28,10 +32,26 @@
 //	@Column(name = "name", nullable = false)
 //	private String username;
 //
+<<<<<<< HEAD
 //	@Column(name = "password", nullable = false)
 //	private String password;
 //
 //	@ManyToMany(fetch = FetchType.EAGER)
 //	private List<Role> roles;
 //
+=======
+//	@Email
+//	@Column(name = "email", nullable = false)
+//	private String email;
+//
+//	@Column(name = "password", nullable = false)
+//	private String password;
+//
+//	@Column(name = "address")
+//	private String address;
+//
+//	@ManyToMany(fetch = FetchType.EAGER)
+//	private List<Role> roles;
+
+>>>>>>> master
 //}

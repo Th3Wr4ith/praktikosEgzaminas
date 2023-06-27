@@ -28,6 +28,10 @@
 //			UserDTO adminUser = new UserDTO();
 //
 //			adminUser.setUsername("admin");
+<<<<<<< HEAD
+=======
+//			adminUser.setEmail("admin@admin.com");
+>>>>>>> master
 //			adminUser.setPassword("admin");
 //			adminUser.setRole("ROLE_ADMIN");
 //
@@ -45,6 +49,10 @@
 //			UserDTO customerUser = new UserDTO();
 //
 //			customerUser.setUsername("customer");
+<<<<<<< HEAD
+=======
+//			customerUser.setEmail("customer@customer.com");
+>>>>>>> master
 //			customerUser.setPassword("customer");
 //			customerUser.setRole("ROLE_CUSTOMER");
 //
